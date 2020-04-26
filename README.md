@@ -18,7 +18,6 @@ Web Profil dibuat dengan :
 
 - halaman utama   : (localhost)
 - halaman login   : (localhost)/login-merdeka
-- email login     : admin_fe@untag-banyuwangi.ac.id
-- password login  : password
-- nama database   : fe_untag
-- file database   : fe_untag.sql
+- email login     : capbasketball@gmail.com
+- nama database   : tugas_akhir
+- file database   : tugas_akhir.sql
