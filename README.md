@@ -1,4 +1,4 @@
-# Web Profil Fakultas Ekonomi Universitas 17 Agustus 1945 Banyuwangi
+# Sistem Pendukung Keputusan Metode SMART (Grafik Perkembangan Pemain Basket)
 
 ## Tentang Web
 
@@ -8,11 +8,6 @@ Web Profil dibuat dengan :
 - admin lte 2.4 untuk halaman admin
 - php 7
 
-## Fitur
-
-- Halaman muka yang dinamis mulai dari artikel, sub menu, carousel, informasi utama web, hingga logo kerja sama
-- admin dapat mengupdate password 
-- password terenkripsi dengan hash
 
 ## Info
 
