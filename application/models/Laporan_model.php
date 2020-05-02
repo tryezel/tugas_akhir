@@ -1,6 +1,6 @@
 <?php
 
-class Menu_model extends CI_Model
+class Laporan_model extends CI_Model
 {
     private $table = 'menu_latihan';
     private $id = 'menu_latihan.id_menu';
@@ -92,68 +92,47 @@ class Menu_model extends CI_Model
         return $query->result();
     }
 
-    function total_bobot($param)
-    {
-        if (isset($param['bulan'])) {
-            $this->db->where('MONTH(menu_latihan.tanggal)', $param['bulan']);
-        }
-        if (!empty($param['id_posisi'])) {
-            $this->db->where('menu_latihan.id_posisi', $param['id_posisi']);
-        }
-
-        if (isset($param['tahun'])) {
-            $this->db->where('YEAR(menu_latihan.tanggal)', $param['tahun']);
-        }
-
-        $this->db->select('
-            SUM(bobot) as total_bobot,
-            ');
-        $this->db->from('menu_latihan');
-        $query = $this->db->get();
-        return $query->row()->total_bobot;
-    }
-
-    function detail_data($id_menu)
-    {
-        $this->db->select('
-            menu_latihan.*,
-            posisi.*,
-            titik_lapangan.*,
-            ');
-        $this->db->join('posisi', 'menu_latihan.id_posisi = posisi.id_posisi');
-        $this->db->join('titik_lapangan', 'menu_latihan.id_titik = titik_lapangan.id_titik');
-        // $this->db->from('pemain');
-        $query =  $this->db->get_where($this->table, array('id_menu' => $id_menu));
-        return $query->row();
-    }
-
-    // function detail_front($link)
+    // function detail_data($id_menu)
     // {
-    //     $query =  $this->db->get_where($this->table, array('link' => $link));
+    //     $this->db->select('
+    //         menu_latihan.*,
+    //         posisi.*,
+    //         titik_lapangan.*,
+    //         ');
+    //     $this->db->join('posisi', 'menu_latihan.id_posisi = posisi.id_posisi');
+    //     $this->db->join('titik_lapangan', 'menu_latihan.id_titik = titik_lapangan.id_titik');
+    //     // $this->db->from('pemain');
+    //     $query =  $this->db->get_where($this->table, array('id_menu' => $id_menu));
     //     return $query->row();
     // }
 
-    function input_data($data)
-    {
-        $this->db->insert($this->table, $data);
-    }
+    // // function detail_front($link)
+    // // {
+    // //     $query =  $this->db->get_where($this->table, array('link' => $link));
+    // //     return $query->row();
+    // // }
 
-    function total_menu()
-    {
-        $this->db->from('menu_latihan');
-        $query = $this->db->get();
-        if ($query->num_rows() > 0) {
-            return $query->num_rows();
-        } else {
-            return 0;
-        }
-    }
+    // function input_data($data)
+    // {
+    //     $this->db->insert($this->table, $data);
+    // }
 
-    function update_data($data, $id_menu)
-    {
-        $this->db->where('id_menu', $id_menu);
-        $this->db->update($this->table, $data);
-    }
+    // function total_menu()
+    // {
+    //     $this->db->from('menu_latihan');
+    //     $query = $this->db->get();
+    //     if ($query->num_rows() > 0) {
+    //         return $query->num_rows();
+    //     } else {
+    //         return 0;
+    //     }
+    // }
+
+    // function update_data($data, $id_menu)
+    // {
+    //     $this->db->where('id_menu', $id_menu);
+    //     $this->db->update($this->table, $data);
+    // }
 
     // function hapus_data($id_data)
     // {

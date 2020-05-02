@@ -82,6 +82,27 @@ class Datamasukan_model extends CI_Model
     //     return $query->result();
     // }
 
+    function detail_perposisi($param)
+    {
+        if (isset($param['bulan'])) {
+            $this->db->where('MONTH(data_masukan.tanggal)', $param['bulan']);
+        }
+        if (!empty($param['id_posisi'])) {
+            $this->db->where('data_masukan.id_menu', $param['id_posisi']);
+        }
+        if (isset($param['tahun'])) {
+            $this->db->where('YEAR(data_masukan.tanggal)', $param['tahun']);
+        }
+
+        $this->db->select('
+            pemain.nama_pemain
+            ');
+        $this->db->join('pemain', 'data_masukan.id_pemain = pemain.id_pemain');
+        $this->db->from('data_masukan');
+        $query =  $this->db->get();
+        return $query->result();
+    }
+
     function detail_data($param)
     {
         if (isset($param['bulan'])) {
@@ -98,14 +119,78 @@ class Datamasukan_model extends CI_Model
         }
 
         $this->db->select('
-            data_masukan.point,data_masukan.id_data
+            data_masukan.*
             ');
-        // $this->db->join('pemain', 'data_masukan.id_pemain = pemain.id_pemain');
-        // $this->db->join('data_masukan', 'data_masukan.id_menu = data_masukan.id_menu');
+        $this->db->join('titik_lapangan', 'data_masukan.id_menu = titik_lapangan.id_titik');
+        $this->db->order_by('titik_lapangan.titik_lapangan', 'asc');
         $this->db->from('data_masukan');
         $query =  $this->db->get();
-        return $query->row();
+        return $query->result();
     }
+
+    function get_min($param)
+    {
+        if (isset($param['bulan'])) {
+            $this->db->where('MONTH(data_masukan.tanggal)', $param['bulan']);
+        }
+        if (!empty($param['id_menu'])) {
+            $this->db->where('data_masukan.id_menu', $param['id_menu']);
+        }
+        if (isset($param['tahun'])) {
+            $this->db->where('YEAR(data_masukan.tanggal)', $param['tahun']);
+        }
+        $this->db->select_min('point');
+        $query =  $this->db->get('data_masukan')->row();
+        return $query->point;
+    }
+
+    function get_max($param)
+    {
+        if (isset($param['bulan'])) {
+            $this->db->where('MONTH(data_masukan.tanggal)', $param['bulan']);
+        }
+        if (!empty($param['id_menu'])) {
+            $this->db->where('data_masukan.id_menu', $param['id_menu']);
+        }
+        if (isset($param['tahun'])) {
+            $this->db->where('YEAR(data_masukan.tanggal)', $param['tahun']);
+        }
+        $this->db->select_max('point');
+        $query =  $this->db->get('data_masukan')->row();
+        return $query->point;
+    }
+
+    function cek($param)
+    {
+        if (isset($param['bulan'])) {
+            $this->db->where('MONTH(data_masukan.tanggal)', $param['bulan']);
+        }
+        if (!empty($param['id_pemain'])) {
+            $this->db->where('data_masukan.id_pemain', $param['id_pemain']);
+        }
+        if (!empty($param['point'])) {
+            $this->db->where('data_masukan.point', $param['point']);
+        }
+        if (!empty($param['id_menu'])) {
+            $this->db->where('data_masukan.id_menu', $param['id_menu']);
+        }
+        if (isset($param['tahun'])) {
+            $this->db->where('YEAR(data_masukan.tanggal)', $param['tahun']);
+        }
+
+        $this->db->select('
+            data_masukan.*
+            ');
+        $this->db->from('data_masukan');
+        $query =  $this->db->get();
+        if ($query->num_rows() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
 
     // function detail_front($link)
     // {

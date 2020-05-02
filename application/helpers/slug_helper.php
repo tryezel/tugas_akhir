@@ -189,6 +189,20 @@ function opt_tahun($start = 1990)
     return $result;
 }
 
+function utility($param)
+{
+    $CI = get_instance();
+    $CI->load->model('Datamasukan_model');
+    $min = $CI->Datamasukan_model->get_min($param);
+    $max = $CI->Datamasukan_model->get_max($param);
+    $hasil = ($param['point'] - $min) / ($max - $min);
+    return $hasil;
+}
+function normalisasi($bobot, $total)
+{
+    return $bobot / $total;
+}
+
 if (!function_exists('dump')) {
     function dump($var, $show = TRUE, $exit = FALSE)
     {

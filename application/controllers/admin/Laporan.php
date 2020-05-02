@@ -1,6 +1,6 @@
 <?php
 
-class Perhitungan extends MY_Controller
+class Laporan extends MY_Controller
 {
 
     function __construct()
@@ -12,11 +12,11 @@ class Perhitungan extends MY_Controller
             redirect('', 'refresh');
         }
         $this->load->model('auth_model');
-        $this->load->model('Perhitungan_model');
-        $this->load->model('Pemain_model');
+        $this->load->model('Menu_model');
         $this->load->model('Posisi_model');
-        $this->load->model('Titik_model');
         $this->load->model('Datamasukan_model');
+        $this->load->model('Titik_model');
+        $this->load->model('Pemain_model');
         $this->load->helper('url');
     }
 
@@ -27,26 +27,36 @@ class Perhitungan extends MY_Controller
     {
         $site = $this->Konfigurasi_model->listing();
         $data = array(
-            'title'                 => 'Perhitungan | ' . $site['nama_website'],
+            'title'                 => ' Laporan | ' . $site['nama_website'],
             'favicon'               => $site['favicon'],
             'site'                  => $site,
         );
         $data['posisinya'] = $this->Posisi_model->tampil_datanya();
+
+        $param['bulan']  = $this->input->get('bulan');
+        $param['tahun']  = $this->input->get('tahun');
         $data['bulan']   = $this->input->get('bulan');
         $data['tahun'] = $this->input->get('tahun');
         $data['id_posisi'] = $this->input->get('id_posisi');
 
-        if (empty($data['bulan'])) {
+        if (empty($param['bulan'])) {
+            $param['bulan'] = date('m');
             $data['bulan'] = date('m');
         }
-        if (empty($data['tahun'])) {
+        if (empty($param['tahun'])) {
+            $param['tahun'] = date('Y');
             $data['tahun'] = date('Y');
         }
-        $param['id_posisi'] = $this->input->get('id_posisi');
+        if (!empty($this->input->get('id_posisi'))) {
+            $param['id_posisi'] = $this->input->get('id_posisi');
+        }
 
-        $data['data'] = $this->Pemain_model->semua_data($param);
+        $data['data'] = $this->Menu_model->semua_data($param);
+        $data['bobot_total'] = $this->Menu_model->total_bobot($param);
+        $data['pemain'] = $this->Pemain_model->semua_data($param);
+        $data['point'] = $this->Datamasukan_model;
 
-        $this->template->load('alayout/template', 'admin/perhitungan/index', $data);
+        $this->template->load('alayout/template', 'admin/laporan/index', $data);
     }
 
     /*
@@ -82,64 +92,19 @@ class Perhitungan extends MY_Controller
     //     }
     // }
 
-    function edit($id)
-    {
-        $site = $this->Konfigurasi_model->listing();
-        $data = array(
-            'title'                 => 'Edit Menu Latihan | ' . $site['nama_website'],
-            'favicon'               => $site['favicon'],
-            'site'                  => $site,
-        );
-        $param['bulan']  = $this->input->get('bulan');
-        $param['tahun']  = $this->input->get('tahun');
-        $data['bulan']   = $this->input->get('bulan');
-        $data['tahun'] = $this->input->get('tahun');
-        $param['id_pemain'] = $id;
-
-        if (empty($param['bulan'])) {
-            $param['bulan'] = date('m');
-            $data['bulan'] = date('m');
-        }
-        if (empty($param['tahun'])) {
-            $param['tahun'] = date('Y');
-            $data['tahun'] = date('Y');
-        }
-
-        $data['data'] = $this->Pemain_model->detail_data($id);
-        $data['isi_menu'] = $this->Datamasukan_model;
-        $param['id_posisi'] =  $this->Pemain_model->detail_data($id)->id_posisi;
-        $data['menu'] = $this->Perhitungan_model->detail_data($param);
-        $this->template->load('alayout/template', 'admin/perhitungan/edit', $data);
-    }
-
-    function simpan()
-    {
-        $id_pemain = $this->input->post('id_pemain');
-        $id_menu = $this->input->post('id_menu[]');
-        $point = $this->input->post('point[]');
-
-        foreach ($id_menu as $key => $v) {
-
-            // $param = array(
-            //     'id_pemain' => $id_pemain,
-            //     'id_menu' => $id_menu[$key],
-            //     'bulan' => $this->input->post('bulan'),
-            //     'tahun' => $this->input->post('tahun'),
-            //     'point' => $point[$key]
-            // );
-            // PR Update point
-            $data = array(
-                'point' => $point[$key],
-                'id_pemain' => $id_pemain,
-                'id_menu' => $id_menu[$key],
-                'tanggal' => date('Y-m-d'),
-            );
-
-            if ($point[$key] != '')
-                $this->Perhitungan_model->input_data($data);
-        }
-        redirect('admin/perhitungan/index/');
-    }
+    // function edit($id_menu)
+    // {
+    //     $site = $this->Konfigurasi_model->listing();
+    //     $data = array(
+    //         'title'                 => 'Edit Menu Latihan | ' . $site['nama_website'],
+    //         'favicon'               => $site['favicon'],
+    //         'site'                  => $site,
+    //     );
+    //     $data['posisinya'] = $this->Posisi_model->tampil_datanya();
+    //     $data['titiknya'] = $this->Titik_model->tampil_datanya();
+    //     $data['menu'] = $this->Menu_model->detail_data($id_menu);
+    //     $this->template->load('alayout/template', 'admin/menu/edit', $data);
+    // }
 
     // function update($id_menu)
     // {

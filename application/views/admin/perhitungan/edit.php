@@ -2,13 +2,13 @@
     <li class="breadcrumb-item">
         <a href="<?php echo site_url('admin/home') ?>">Dashboard</a>
     </li>
-    <li class="breadcrumb-item active">Edit Menu Latihan</li>
+    <li class="breadcrumb-item active">Perhitungan</li>
 </ol>
 
 <div class="box">
     <div class="box-header">
         <div class="col-md-15">
-            <h2 class="page-header">Edit Menu Latihan</h2>
+            <h2 class="page-header">Input Data</h2>
         </div>
         <form action="<?php echo site_url('admin/perhitungan/edit/' . $data->id_pemain) ?>" method="get">
             <div class="col-md-2">
