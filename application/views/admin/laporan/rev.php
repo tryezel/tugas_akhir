@@ -66,19 +66,45 @@
 
   <?php } else { ?>
     <!-- Tampilan jika posisi terisi -->
-
-    <?php
-        $normalisasi = array();
-        foreach ($data as $key => $v) {
-          $normal = normalisasi($v->bobot, $bobot_total);
-          $normalisasi[$key] = $normal;
-        }
-    ?>
-
-    <hr>
-
     <table id="table_id" class="display" cellspacing="0" width="100%">
       <thead>
+        <tr>
+          <th>No</th>
+          <th>Posisi</th>
+          <th>Titik Lapangan</th>
+          <th>Bobot</th>
+          <th>Total</th>
+          <th>Normalisi</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php
+        $normalisasi = array();
+        foreach ($data as $key => $v) { ?>
+          <tr>
+            <td><?= $key + 1 ?></td>
+            <td><?= $v->posisi ?></td>
+            <td><?= $v->titik_lapangan ?></td>
+            <td><?= $v->bobot ?></td>
+            <td>
+              <?= $bobot_total ?>
+            </td>
+            <td><?php
+                $normal = normalisasi($v->bobot, $bobot_total);
+                echo  $normal;
+                $normalisasi[$key] = $normal;
+                ?></td>
+          </tr>
+        <?php }
+        ?>
+      </tbody>
+    </table>
+    <pre>
+    <?php print_r($normalisasi); ?>
+    </pre>
+    <hr>
+    <h2>Tabel Pemain</h2>
+    <table id="table_id" class="display" cellspacing="0" width="100%"">
         <tr>
           <td>Nama Pemain</td>
           <?php
@@ -87,8 +113,6 @@
           <?php }
           ?>
         </tr>
-      </thead>
-      <tbody>
         <?php
         foreach ($pemain as $v) {
           $params = array(
@@ -98,17 +122,17 @@
           );
           $data_point = $point->detail_data($params);
         ?>
-          <tr>
-            <td><?= $v->nama_pemain ?></td>
-            <?php foreach ($data_point as $v) { ?>
-              <td><?php echo $v->point; ?></td>
-            <?php } ?>
-          </tr>
+        <tr>
+          <td><?= $v->nama_pemain ?></td>
+          <?php foreach ($data_point as $v) { ?>
+          <td><?php echo $v->point; ?></td>
+          <?php } ?>
+      </tr>
         <?php }
         ?>
-    </table>
+      </table>
 
-    <hr>
+      <hr>
     <h2>Tabel Utility</h2>
     <table id=" table_id" class="display" cellspacing="0" width="100%">
       <tr>
@@ -159,7 +183,7 @@
       <?php }
       ?>
     </table>
-    <!-- <pre>
+    <pre>
       <?php print_r($utility_pemain) ?>
       ==========pemain===============
       <?php print_r($semua_pemain) ?>
@@ -181,9 +205,9 @@
         // echo count($semua_utility) . '<br>';
         // echo count($semua_utility, COUNT_RECURSIVE);
       ?>
-    </pre> -->
+    </pre>
     <hr>
-    <!-- <h2>Tabel Hasil Pengolahan</h2>
+    <h2>Tabel Hasil Pengolahan</h2>
     <table id=" table_id" class="display" cellspacing="0" width="100%">
       <tr>
         <td>Nama Pemain</td>
@@ -218,16 +242,17 @@
         </tr>
       <?php }
       ?>
-    </table> -->
-    <h2>Hasil Akhir</h2>
-    <hr>
-    <?php arsort($hasil_akhir);
-        foreach ($hasil_akhir as $key => $value) {
-          echo "$key = $value <br>";
-        };
-    ?>
+    </table>
   <?php } ?>
   </div>
-
-
+  ==========Hasil===============
+  <pre>
+  <?php print_r($hasil_akhir); ?>
+  </pre>
+  <hr>
+  <?php arsort($hasil_akhir);
+  foreach ($hasil_akhir as $key => $value) {
+    echo "$key = $value <br>";
+  };
+  ?>
 </div>

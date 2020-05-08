@@ -14,7 +14,7 @@
 
     <!-- /.box-header -->
     <div class="box-body">
-      <form action="<?php echo site_url('admin/laporan/index') ?>" method="get">
+      <form action="<?php echo site_url('admin/laporan/index_cewek') ?>" method="get">
         <div class="col-md-2">
           <div class="form-group">
             <label>Bulan</label>

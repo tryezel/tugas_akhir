@@ -14,13 +14,28 @@
         </a>
       </li>
       <hr>
-      <li class="nav-item <?php if ($this->uri->segment(2) == 'datapemain') {
+
+
+      <li class="treeview <?php if ($this->uri->segment(2) == 'datapemain') {
                             echo "active";
-                          } ?>" data-toggle="tooltip" data-placement="right">
-        <a class="nav-link" href="<?php echo base_url('admin/pemain'); ?>">
-          <i class="fa fa-users"></i>
-          <span class="nav-link-text">Data Pemain</span>
+                          } ?>">
+        <a href="#"><i class="fa fa-users"></i> <span>Data Pemain</span>
+          <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
         </a>
+        <ul class="treeview-menu">
+          <li class="<?php if ($this->uri->segment(3) == 'datapemain') {
+                        echo "active";
+                      } ?>">
+            <a href="<?php echo site_url('admin/pemain/index_laki') ?>"><i class="fa  fa-angle-right"></i> Laki-Laki</a>
+          </li>
+          <li class="<?php if ($this->uri->segment(3) == 'datapemain') {
+                        echo "active";
+                      } ?>">
+            <a href="<?php echo site_url('admin/pemain/index_cewek') ?>"><i class="fa  fa-angle-right"></i> Perempuan</a>
+          </li>
+        </ul>
       </li>
 
       <li class="nav-item <?php if ($this->uri->segment(2) == 'menulatihan') {
@@ -32,22 +47,51 @@
         </a>
       </li>
 
-      <li class="nav-item <?php if ($this->uri->segment(2) == 'perhitungan') {
+
+
+      <li class="treeview <?php if ($this->uri->segment(2) == 'perhitungan') {
                             echo "active";
-                          } ?>" data-toggle="tooltip" data-placement="right">
-        <a class="nav-link" href="<?php echo base_url('admin/perhitungan'); ?>">
-          <i class="fa fa-calculator"></i>
-          <span class="nav-link-text">Perhitungan</span>
+                          } ?>">
+        <a href="#"><i class="fa fa-calculator"></i> <span>Perhitungan</span>
+          <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
         </a>
+        <ul class="treeview-menu">
+          <li class="<?php if ($this->uri->segment(3) == 'perhitungan') {
+                        echo "active";
+                      } ?>">
+            <a href="<?php echo site_url('admin/perhitungan/index_laki') ?>"><i class="fa  fa-angle-right"></i> Laki-Laki</a>
+          </li>
+          <li class="<?php if ($this->uri->segment(3) == 'perhitungan') {
+                        echo "active";
+                      } ?>">
+            <a href="<?php echo site_url('admin/perhitungan/index_cewek') ?>"><i class="fa  fa-angle-right"></i> Perempuan</a>
+          </li>
+        </ul>
       </li>
 
-      <li class="nav-item <?php if ($this->uri->segment(2) == 'laporan') {
+
+      <li class="treeview <?php if ($this->uri->segment(2) == 'laporan') {
                             echo "active";
-                          } ?>" data-toggle="tooltip" data-placement="right">
-        <a class="nav-link" href="<?php echo base_url('admin/laporan'); ?>">
-          <i class="fa fa-file-text"></i>
-          <span class="nav-link-text">Laporan</span>
+                          } ?>">
+        <a href="#"><i class="fa fa-file-text"></i> <span>Laporan</span>
+          <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
         </a>
+        <ul class="treeview-menu">
+          <li class="<?php if ($this->uri->segment(3) == 'laporan') {
+                        echo "active";
+                      } ?>">
+            <a href="<?php echo site_url('admin/laporan/index_laki') ?>"><i class="fa  fa-angle-right"></i> Laki-Laki</a>
+          </li>
+          <li class="<?php if ($this->uri->segment(3) == 'perhitungan') {
+                        echo "active";
+                      } ?>">
+            <a href="<?php echo site_url('admin/laporan/index_cewek') ?>"><i class="fa  fa-angle-right"></i> Perempuan</a>
+          </li>
+        </ul>
       </li>
 
     </ul>

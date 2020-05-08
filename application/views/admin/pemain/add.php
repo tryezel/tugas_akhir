@@ -49,6 +49,15 @@
                             </div>
 
                             <div>
+                                <label for="id">Gender</label>
+                                <select class="form-control" name="gender">
+                                    <option value="l">Laki-Laki</option>
+                                    <option value="p">Perempuan</option>
+                                </select>
+                                </form>
+                            </div>
+
+                            <div>
                                 <label for="id">Tinggi</label>
                                 <input type="text" placeholder="Tinggi Cm" name="tinggi" value="<?php echo $this->input->post('tinggi'); ?>" class="form-control" required>
 

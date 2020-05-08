@@ -1,142 +1,69 @@
-<?php
+<?php 
+	defined('BASEPATH') OR exit('No direct script access allowed');
+	/**
+	 * 
+	 */
+	class Laporan_model extends CI_Model
+	{
+		
+		function __construct()
+		{
+			# code...
+			parent::__construct();
+		}
 
-class Laporan_model extends CI_Model
-{
-    private $table = 'menu_latihan';
-    private $id = 'menu_latihan.id_menu';
+		function ambil_pemain($posisi)
+		{
+			$this->db->where('id_posisi', $posisi);
+			return $this->db->get('pemain')->result();
+		}
 
-
-    function __construct()
-    {
-        $this->table = "menu_latihan";
-        parent::__construct();
-    }
-
-    // function data($number,$offset){
-    //     $this->db->select('
-    //     artikel.*, kategori_artikel.id_kategori AS id_kategori, kategori_artikel.kategori_artikel
-    //     ');
-    //      $this->db->select('
-    //     artikel.*, user.id_user AS id_user, user.nama');
-    //     $this->db->join('user', 'artikel.id_user = user.id_user');
-    //     $this->db->join('kategori_artikel', 'artikel.id_kategori = kategori_artikel.id_kategori');
-    //     return $query = $this->db->get('artikel',$number,$offset)->result();	
-
-    // }
-
-    // function get_data($filter = array())
-    // {
-    // 	if(!empty($filter))
-    // 	{
-    // 		if(!empty($filter['limit']))
-    // 		{
-    // 			if(!empty($filter['offset']))
-    // 			{
-    // 				$this->db->limit($filter['limit'], $filter['offset']);
-    // 			}
-    // 			else
-    // 			{
-    // 				$this->db->limit($filter['limit']);
-    // 			}
-    // 		}
-
-    // 	}
-
-    // 	$this->db->select('
-    //         artikel.*, 
-    //         kategori_artikel.id_kategori AS id_kategori, 
-    //         kategori_artikel.kategori_artikel,
-    //         user.id_user AS id_user, 
-    //         user.nama
-    //     ');
-    //     $this->db->from('artikel');
-    //     $this->db->join('user', 'artikel.id_user = user.id_user');
-    //     $this->db->join('kategori_artikel', 'artikel.id_kategori = kategori_artikel.id_kategori');
-
-    // 	$query = $this->db->get();
-    // 	return $query;
-    // }
-
-    function jml_data()
-    {
-        $query = $this->db->get($this->table);
-        $total = $query->num_rows();
-        return $total;
-    }
-
-
-
-    function semua_data($param)
-    {
-        if (isset($param['bulan'])) {
-            $this->db->where('MONTH(menu_latihan.tanggal)', $param['bulan']);
-        }
-        if (!empty($param['id_posisi'])) {
-            $this->db->where('menu_latihan.id_posisi', $param['id_posisi']);
+		function ambil_data($posisi, $bulan)
+		{
+            // // SELECT * FROM `data_masukan` WHERE id_pemain IN (SELECT id_pemain FROM pemain WHERE id_posisi = 2)
+			// $this->db->where('id_pemain IN (SELECT id_pemain FROM pemain WHERE id_posisi = 2)', );
+			return $this->db->query("SELECT * FROM `data_masukan` WHERE id_pemain IN (SELECT id_pemain FROM pemain WHERE id_posisi = $posisi) AND MONTH(tanggal) =  $bulan")->result();
         }
 
-        if (isset($param['tahun'])) {
-            $this->db->where('YEAR(menu_latihan.tanggal)', $param['tahun']);
+		function data_menu($posisi, $bulan)
+		{
+            // // SELECT * FROM `data_masukan` WHERE id_pemain IN (SELECT id_pemain FROM pemain WHERE id_posisi = 2)
+			// $this->db->where('id_pemain IN (SELECT id_pemain FROM pemain WHERE id_posisi = 2)', );
+			return $this->db->query("SELECT DISTINCT id_menu FROM `data_masukan` WHERE id_pemain IN (SELECT id_pemain FROM pemain WHERE id_posisi = $posisi) AND MONTH(tanggal) =  $bulan order by id_menu ASC")->result();
+        }
+		function id_pemain($posisi, $bulan)
+		{
+            // // SELECT * FROM `data_masukan` WHERE id_pemain IN (SELECT id_pemain FROM pemain WHERE id_posisi = 2)
+			// $this->db->where('id_pemain IN (SELECT id_pemain FROM pemain WHERE id_posisi = 2)', );
+			return $this->db->query("SELECT DISTINCT id_pemain FROM `data_masukan` WHERE id_pemain IN (SELECT id_pemain FROM pemain WHERE id_posisi = $posisi) AND MONTH(tanggal) =  $bulan order by id_pemain ASC")->result();
         }
 
-        $this->db->select('
-            menu_latihan.*,
-            posisi.*,
-            titik_lapangan.*,
-            ');
-        $this->db->join('posisi', 'menu_latihan.id_posisi = posisi.id_posisi');
-        $this->db->join('titik_lapangan', 'menu_latihan.id_titik = titik_lapangan.id_titik');
-        $this->db->from('menu_latihan');
-        $this->db->order_by('titik_lapangan', 'asc');
-        $query = $this->db->get();
-        return $query->result();
+		function ambil_bobot($posisi, $bulan)
+		{
+            $this->db->where('id_posisi', $posisi);
+            $this->db->where('MONTH(tanggal)',  $bulan);
+			return $this->db->get("menu_latihan")->result();
+        }
+		function jumlah_titik($posisi, $bulan)
+		{
+            // $this->db->where('id_posisi', $posisi);
+			return $this->db->query("SELECT COUNT(id_titik) AS jumlah_titik FROM menu_latihan WHERE id_posisi = $posisi AND MONTH(tanggal) =  $bulan")->result_array();
+        }
+		function sum_bobot($posisi, $bulan)
+		{
+			
+			return $this->db->query("SELECT SUM(bobot) AS sum_bobot FROM menu_latihan WHERE id_posisi = $posisi AND MONTH(tanggal) =  $bulan")->result_array();
+        }
+
+        function max($id_menu, $bulan)
+        {
+
+            return $this->db->query("SELECT MAX(point) AS pointmax, id_menu FROM `data_masukan` where id_menu = $id_menu AND MONTH(tanggal) =  $bulan")->result_array();
+        }
+
+        function min($id_menu, $bulan)
+        {
+            return $this->db->query("SELECT MIN(point) AS pointmin, id_menu FROM `data_masukan` where id_menu = $id_menu AND MONTH(tanggal) =  $bulan")->result_array();
+        }
     }
-
-    // function detail_data($id_menu)
-    // {
-    //     $this->db->select('
-    //         menu_latihan.*,
-    //         posisi.*,
-    //         titik_lapangan.*,
-    //         ');
-    //     $this->db->join('posisi', 'menu_latihan.id_posisi = posisi.id_posisi');
-    //     $this->db->join('titik_lapangan', 'menu_latihan.id_titik = titik_lapangan.id_titik');
-    //     // $this->db->from('pemain');
-    //     $query =  $this->db->get_where($this->table, array('id_menu' => $id_menu));
-    //     return $query->row();
-    // }
-
-    // // function detail_front($link)
-    // // {
-    // //     $query =  $this->db->get_where($this->table, array('link' => $link));
-    // //     return $query->row();
-    // // }
-
-    // function input_data($data)
-    // {
-    //     $this->db->insert($this->table, $data);
-    // }
-
-    // function total_menu()
-    // {
-    //     $this->db->from('menu_latihan');
-    //     $query = $this->db->get();
-    //     if ($query->num_rows() > 0) {
-    //         return $query->num_rows();
-    //     } else {
-    //         return 0;
-    //     }
-    // }
-
-    // function update_data($data, $id_menu)
-    // {
-    //     $this->db->where('id_menu', $id_menu);
-    //     $this->db->update($this->table, $data);
-    // }
-
-    // function hapus_data($id_data)
-    // {
-    //     $this->db->where('id_pemain', $id_data);
-    //     $this->db->delete($this->table);
-    // }
-}
+?>

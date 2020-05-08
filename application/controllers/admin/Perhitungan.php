@@ -43,10 +43,62 @@ class Perhitungan extends MY_Controller
             $data['tahun'] = date('Y');
         }
         $param['id_posisi'] = $this->input->get('id_posisi');
-
+        $param['gender'] = $this->input->get('gender');
         $data['data'] = $this->Pemain_model->semua_data($param);
 
         $this->template->load('alayout/template', 'admin/perhitungan/index', $data);
+    }
+
+    function index_laki()
+    {
+        $site = $this->Konfigurasi_model->listing();
+        $data = array(
+            'title'                 => 'Perhitungan | ' . $site['nama_website'],
+            'favicon'               => $site['favicon'],
+            'site'                  => $site,
+        );
+        $data['posisinya'] = $this->Posisi_model->tampil_datanya();
+        $data['bulan']   = $this->input->get('bulan');
+        $data['tahun'] = $this->input->get('tahun');
+        $data['id_posisi'] = $this->input->get('id_posisi');
+
+        if (empty($data['bulan'])) {
+            $data['bulan'] = date('m');
+        }
+        if (empty($data['tahun'])) {
+            $data['tahun'] = date('Y');
+        }
+        $param['id_posisi'] = $this->input->get('id_posisi');
+        $param['gender'] = $this->input->get('gender');
+        $data['data'] = $this->Pemain_model->data_laki($param);
+
+        $this->template->load('alayout/template', 'admin/perhitungan/index_laki', $data);
+    }
+
+    function index_cewek()
+    {
+        $site = $this->Konfigurasi_model->listing();
+        $data = array(
+            'title'                 => 'Perhitungan | ' . $site['nama_website'],
+            'favicon'               => $site['favicon'],
+            'site'                  => $site,
+        );
+        $data['posisinya'] = $this->Posisi_model->tampil_datanya();
+        $data['bulan']   = $this->input->get('bulan');
+        $data['tahun'] = $this->input->get('tahun');
+        $data['id_posisi'] = $this->input->get('id_posisi');
+
+        if (empty($data['bulan'])) {
+            $data['bulan'] = date('m');
+        }
+        if (empty($data['tahun'])) {
+            $data['tahun'] = date('Y');
+        }
+        $param['id_posisi'] = $this->input->get('id_posisi');
+        $param['gender'] = $this->input->get('gender');
+        $data['data'] = $this->Pemain_model->data_cewek($param);
+
+        $this->template->load('alayout/template', 'admin/perhitungan/index_cewek', $data);
     }
 
     /*

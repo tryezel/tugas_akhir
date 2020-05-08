@@ -33,10 +33,49 @@ class Pemain extends MY_Controller
         $data['id_posisi'] = $this->input->get('id_posisi');
 
         $param['id_posisi'] = $this->input->get('id_posisi');
+        $param['gender'] = $this->input->get('gender');
         $data['data'] = $this->Pemain_model->semua_data($param);
 
 
         $this->template->load('alayout/template', 'admin/pemain/index', $data);
+    }
+
+    function index_laki()
+    {
+        $site = $this->Konfigurasi_model->listing();
+        $data = array(
+            'title'                 => 'Data Pemain | ' . $site['nama_website'],
+            'favicon'               => $site['favicon'],
+            'site'                  => $site,
+        );
+        $data['posisinya'] = $this->Posisi_model->tampil_datanya();
+        $data['id_posisi'] = $this->input->get('id_posisi');
+
+        $param['id_posisi'] = $this->input->get('id_posisi');
+        $param['gender'] = $this->input->get('gender');
+        $data['data'] = $this->Pemain_model->data_laki($param);
+
+
+        $this->template->load('alayout/template', 'admin/pemain/index_laki', $data);
+    }
+
+    function index_cewek()
+    {
+        $site = $this->Konfigurasi_model->listing();
+        $data = array(
+            'title'                 => 'Data Pemain | ' . $site['nama_website'],
+            'favicon'               => $site['favicon'],
+            'site'                  => $site,
+        );
+        $data['posisinya'] = $this->Posisi_model->tampil_datanya();
+        $data['id_posisi'] = $this->input->get('id_posisi');
+
+        $param['id_posisi'] = $this->input->get('id_posisi');
+        $param['gender'] = $this->input->get('gender');
+        $data['data'] = $this->Pemain_model->data_cewek($param);
+
+
+        $this->template->load('alayout/template', 'admin/pemain/index_cewek', $data);
     }
 
     /*
@@ -62,13 +101,18 @@ class Pemain extends MY_Controller
                 'id_jurusan' => $this->input->post('id_jurusan'),
                 'nama_pemain' => $this->input->post('nama_pemain'),
                 'tanggal_lahir' => $this->input->post('tanggal_lahir'),
+                'gender' => $this->input->post('gender'),
                 'tinggi'      => $this->input->post('tinggi'),
                 'berat_badan' => $this->input->post('berat_badan'),
                 'nim' => $this->input->post('nim'),
             );
 
             $this->Pemain_model->input_data($params);
-            redirect('admin/pemain');
+            if ($this->input->post('gender') == 'l') {
+                redirect('admin/pemain/index_laki');
+            } elseif ($this->input->post('gender') == 'p') {
+                redirect('admin/pemain/index_cewek');
+            }
         } else {
             $this->template->load('alayout/template', 'admin/pemain/add', $data);
         }
@@ -95,13 +139,18 @@ class Pemain extends MY_Controller
             'id_jurusan' => $this->input->post('id_jurusan'),
             'nama_pemain' => $this->input->post('nama_pemain'),
             'tanggal_lahir' => $this->input->post('tanggal_lahir'),
+            'gender' => $this->input->post('gender'),
             'tinggi'      => $this->input->post('tinggi'),
             'berat_badan' => $this->input->post('berat_badan'),
             'nim' => $this->input->post('nim'),
         );
 
         $this->Pemain_model->update_data($data, $id_pemain);
-        redirect('admin/pemain/index/');
+        if ($this->input->post('gender') == 'l') {
+            redirect('admin/pemain/index_laki');
+        } elseif ($this->input->post('gender') == 'p') {
+            redirect('admin/pemain/index_cewek');
+        }
     }
 
     function hapus($id)

@@ -46,6 +46,14 @@
                         </div>
 
                         <div class="form-group">
+                            <label>Gender</label>
+                            <select class="form-control" name="gender">
+                                <option <?= ($pemain->gender == 'l') ? 'selected' : '' ?> value="l">Laki-laki</option>
+                                <option <?= ($pemain->gender == 'p') ? 'selected' : '' ?> value="p">Perempuan</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
                             <label for="id">Tinggi</label>
                             <input type="text" placeholder="tinggi" name="tinggi" value="<?php echo ($this->input->post('tinggi') ? $this->input->post('tinggi') : $pemain->tinggi); ?>" class="form-control" required>
                         </div>

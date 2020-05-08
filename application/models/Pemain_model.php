@@ -69,6 +69,50 @@ class Pemain_model extends CI_Model
         if (!empty($param['id_posisi'])) {
             $this->db->where('pemain.id_posisi', $param['id_posisi']);
         }
+        if (!empty($param['gender'])) {
+            $this->db->where('pemain.gender', $param['gender']);
+        }
+        $this->db->select('
+            pemain.*,
+            posisi.*,
+            jurusan.*,
+            ');
+        $this->db->join('posisi', 'pemain.id_posisi = posisi.id_posisi');
+        $this->db->join('jurusan', 'pemain.id_jurusan = jurusan.id_jurusan');
+        $this->db->from('pemain');
+        $this->db->order_by('id_pemain', 'asc');
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    function data_laki($param)
+    {
+        if (!empty($param['id_posisi'])) {
+            $this->db->where('pemain.id_posisi', $param['id_posisi']);
+        }
+        $this->db->where('pemain.gender', 'l');
+
+        $this->db->select('
+            pemain.*,
+            posisi.*,
+            jurusan.*,
+            ');
+        $this->db->join('posisi', 'pemain.id_posisi = posisi.id_posisi');
+        $this->db->join('jurusan', 'pemain.id_jurusan = jurusan.id_jurusan');
+        $this->db->from('pemain');
+        $this->db->order_by('id_pemain', 'asc');
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    function data_cewek($param)
+    {
+        if (!empty($param['id_posisi'])) {
+            $this->db->where('pemain.id_posisi', $param['id_posisi']);
+        }
+
+        $this->db->where('pemain.gender', 'p');
+
         $this->db->select('
             pemain.*,
             posisi.*,
@@ -83,20 +127,7 @@ class Pemain_model extends CI_Model
     }
 
 
-    // function semua_data()
-    // {
-    //     $this->db->select('
-    //         pemain.*,
-    //         posisi.*,
-    //         jurusan.*,
-    //         ');
-    //     $this->db->join('posisi', 'pemain.id_posisi = posisi.id_posisi');
-    //     $this->db->join('jurusan', 'pemain.id_jurusan = jurusan.id_jurusan');
-    //     $this->db->from('pemain');
-    //     $this->db->order_by('id_pemain', 'asc');
-    //     $query = $this->db->get();
-    //     return $query->result();
-    // }
+
 
     function detail_data($id_pemain)
     {

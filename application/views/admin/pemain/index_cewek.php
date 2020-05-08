@@ -8,12 +8,12 @@
 
   <div class="box">
     <div class="box-header">
-      <h2 class="page-header" style="display: initial;">Data Pemain</h2>
+      <h2 class="page-header" style="display: initial;">Data Pemain Perempuan</h2>
       <a href="<?php echo site_url('admin/pemain/tambah') ?> " class="btn btn-success" style="float: right;">Tambah Pemain Baru</a>
     </div>
     <!-- /.box-header -->
     <div class="box-body">
-      <form action="<?php echo site_url('admin/pemain/index') ?>" method="get">
+      <form action="<?php echo site_url('admin/pemain/index_cewek') ?>" method="get">
         <div class="col-md-4">
           <div class="form-group">
             <label>Posisi</label>
@@ -28,19 +28,7 @@
           </div>
         </div>
 
-        <div class="col-md-4">
-          <div class="form-group">
 
-            <label for="id">Gender</label>
-            <select class="form-control" name="gender">
-              <option value="">Semua</option>
-              <option value="l">Laki-Laki</option>
-              <option value="p">Perempuan</option>
-            </select>
-
-
-          </div>
-        </div>
 
         <div class="col-md-2">
           <div class="form-group">
