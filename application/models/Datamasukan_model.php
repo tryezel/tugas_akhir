@@ -118,9 +118,9 @@ class Datamasukan_model extends CI_Model
             $this->db->where('YEAR(data_masukan.tanggal)', $param['tahun']);
         }
 
-        $this->db->select('
-            data_masukan.*
-            ');
+        // $this->db->select('
+        //     data_masukan.*
+        //     ');
         $this->db->join('titik_lapangan', 'data_masukan.id_menu = titik_lapangan.id_titik');
         $this->db->order_by('titik_lapangan.titik_lapangan', 'asc');
         $this->db->from('data_masukan');

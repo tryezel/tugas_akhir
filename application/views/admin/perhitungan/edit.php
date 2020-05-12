@@ -1,6 +1,10 @@
 <ol class="breadcrumb">
     <li class="breadcrumb-item">
-        <a href="<?php echo site_url('admin/home') ?>">Dashboard</a>
+        <a href="<?php
+
+                    use phpDocumentor\Reflection\Types\Object_;
+
+                    echo site_url('admin/home') ?>">Dashboard</a>
     </li>
     <li class="breadcrumb-item active">Perhitungan</li>
 </ol>
@@ -52,15 +56,24 @@
                 'tahun' => $tahun
             );
             $isi = $isi_menu->detail_data($param);
+            foreach ($isi as $key => $value) {
+                $array['point'] = $value->point;
+            }
+
         ?>
             <div class="form-group" style="margin-left: 20px">
                 <label for=""><?= $v->titik_lapangan ?></label> <br>
                 <input type="hidden" name="id_menu[]" value="<?= $v->id_titik ?>">
-                <input type="text" placeholder="Poin" name="point[]" value="<?php if (!empty($isi)) echo $isi->point; ?>" <?php if (!empty($isi)) echo 'disabled'; ?>>
+                <input type="text" placeholder="Poin" name="point[]" value="<?php if (!empty($isi)) echo $array['point']; ?>" <?php if (!empty($isi)) echo 'disabled'; ?> required>
             </div>
         <?php } ?>
-        <button class="btn btn-info">simpan</button>
-        <a href="<?php echo site_url('admin/perhitungan/index') ?>" class="btn btn-danger">Kembali</a>
+        <button class="btn btn-info" <?php if (!empty($isi)) echo 'disabled'; ?>>simpan</button>
+        <a href="<?php if ($data->gender == 'l') {
+                        echo base_url('admin/perhitungan/index_laki');
+                    } elseif ($data->gender == 'p') {
+                        echo base_url('admin/perhitungan/index_cewek');
+                    }
+                    ?> " class="btn btn-danger">Kembali</a>
         <?php echo form_close(); ?>
     </div>
 </div>

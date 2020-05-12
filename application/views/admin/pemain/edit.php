@@ -82,7 +82,12 @@
                     <div class="col-md-12">
                         <div style="float: right">
                             <button type="submit" class="btn btn-primary" value="simpan">Simpan</button>
-                            <a href="<?php echo base_url('admin/pemain') ?>" class="btn btn-danger">Kembali</a>
+                            <a href="<?php if ($pemain->gender == 'l') {
+                                            echo base_url('admin/pemain/index_laki');
+                                        } elseif ($pemain->gender == 'p') {
+                                            echo base_url('admin/pemain/index_cewek');
+                                        }
+                                        ?> " class="btn btn-danger">Kembali</a>
                         </div>
                     </div>
                 </div>
