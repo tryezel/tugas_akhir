@@ -92,6 +92,7 @@ class Laporan extends MY_Controller
         $data['pemain'] = $this->Pemain_model->data_laki($param);
         $data['point'] = $this->Datamasukan_model;
 
+
         $this->template->load('alayout/template', 'admin/laporan/index_laki', $data);
     }
 

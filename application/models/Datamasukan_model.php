@@ -118,14 +118,40 @@ class Datamasukan_model extends CI_Model
             $this->db->where('YEAR(data_masukan.tanggal)', $param['tahun']);
         }
 
-        // $this->db->select('
-        //     data_masukan.*
-        //     ');
+        $this->db->select('
+            data_masukan.*,
+            titik_lapangan.*,
+            pemain.nama_pemain,
+            ');
         $this->db->join('titik_lapangan', 'data_masukan.id_menu = titik_lapangan.id_titik');
+        $this->db->join('pemain', 'data_masukan.id_pemain = pemain.id_pemain');
         $this->db->order_by('titik_lapangan.titik_lapangan', 'asc');
         $this->db->from('data_masukan');
         $query =  $this->db->get();
         return $query->result();
+    }
+
+    function detail_row($param)
+    {
+        if (isset($param['bulan'])) {
+            $this->db->where('MONTH(data_masukan.tanggal)', $param['bulan']);
+        }
+        if (!empty($param['id_pemain'])) {
+            $this->db->where('data_masukan.id_pemain', $param['id_pemain']);
+        }
+        if (!empty($param['id_menu'])) {
+            $this->db->where('data_masukan.id_menu', $param['id_menu']);
+        }
+        if (isset($param['tahun'])) {
+            $this->db->where('YEAR(data_masukan.tanggal)', $param['tahun']);
+        }
+
+        $this->db->select('
+            data_masukan.*,
+            ');
+        $this->db->from('data_masukan');
+        $query =  $this->db->get();
+        return $query->row()->point;
     }
 
     function get_min($param)
@@ -188,6 +214,31 @@ class Datamasukan_model extends CI_Model
         } else {
             return false;
         }
+    }
+
+    function get_data($param)
+    {
+        if (isset($param['bulan'])) {
+            $this->db->where('MONTH(data_masukan.tanggal)', $param['bulan']);
+        }
+        if (!empty($param['id_pemain'])) {
+            $this->db->where('data_masukan.id_pemain', $param['id_pemain']);
+        }
+        if (!empty($param['id_menu'])) {
+            $this->db->where('data_masukan.id_menu', $param['id_menu']);
+        }
+        if (isset($param['tahun'])) {
+            $this->db->where('YEAR(data_masukan.tanggal)', $param['tahun']);
+        }
+
+        // $this->db->select('
+        //     data_masukan.*
+        //     ');
+        $this->db->join('titik_lapangan', 'data_masukan.id_menu = titik_lapangan.id_titik');
+        $this->db->order_by('titik_lapangan.titik_lapangan', 'asc');
+        $this->db->from('data_masukan');
+        $query =  $this->db->get();
+        return $query->result();
     }
 
 
