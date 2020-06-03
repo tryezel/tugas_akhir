@@ -167,6 +167,7 @@ class Perhitungan extends MY_Controller
     function simpan()
     {
         $id_pemain = $this->input->post('id_pemain');
+        $gender = $this->input->post('gender');
         $id_menu = $this->input->post('id_menu[]');
         $point = $this->input->post('point[]');
 
@@ -190,7 +191,12 @@ class Perhitungan extends MY_Controller
             if ($point[$key] != '')
                 $this->Perhitungan_model->input_data($data);
         }
-        redirect('admin/perhitungan/index/');
+        if ($gender == 'l') {
+            redirect('admin/perhitungan/index_laki');
+        }
+        if ($gender == 'p') {
+            redirect('admin/perhitungan/index_cewek');
+        }
     }
 
     // function update($id_menu)

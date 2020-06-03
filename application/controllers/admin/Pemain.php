@@ -153,7 +153,7 @@ class Pemain extends MY_Controller
         }
     }
 
-    function hapus($id)
+    function hapus_laki($id)
     {
         $site = $this->Konfigurasi_model->listing();
         $data = array(
@@ -166,7 +166,25 @@ class Pemain extends MY_Controller
         // check if the artikel exists before trying to delete it
         if (isset($pemain->id_pemain)) {
             $this->Pemain_model->hapus_data($pemain->id_pemain);
-            redirect('admin/pemain/index');
+            redirect('admin/pemain/index_laki');
+        } else
+            show_error('Data Artikel tidak ada');
+    }
+
+    function hapus_cewek($id)
+    {
+        $site = $this->Konfigurasi_model->listing();
+        $data = array(
+            'title'                 => 'Data Pemain | ' . $site['nama_website'],
+            'favicon'               => $site['favicon'],
+            'site'                  => $site,
+        );
+        $pemain = $this->Pemain_model->detail_data($id);
+
+        // check if the artikel exists before trying to delete it
+        if (isset($pemain->id_pemain)) {
+            $this->Pemain_model->hapus_data($pemain->id_pemain);
+            redirect('admin/pemain/index_cewek');
         } else
             show_error('Data Artikel tidak ada');
     }

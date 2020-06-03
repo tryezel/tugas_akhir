@@ -133,6 +133,9 @@ class Datamasukan_model extends CI_Model
 
     function detail_row($param)
     {
+
+
+
         if (isset($param['bulan'])) {
             $this->db->where('MONTH(data_masukan.tanggal)', $param['bulan']);
         }

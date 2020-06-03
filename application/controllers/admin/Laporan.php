@@ -56,7 +56,35 @@ class Laporan extends MY_Controller
         $data['pemain'] = $this->Pemain_model->semua_data($param);
         $data['point'] = $this->Datamasukan_model;
 
-        $this->template->load('alayout/template', 'admin/laporan/index', $data);
+        $this->template->load('alayout/template', 'admin/laporan/rev', $data);
+    }
+
+    function detail_laki()
+    {
+        $site = $this->Konfigurasi_model->listing();
+        $data = array(
+            'title'                 => ' Laporan | ' . $site['nama_website'],
+            'favicon'               => $site['favicon'],
+            'site'                  => $site,
+        );
+        $data['posisinya'] = $this->Posisi_model->tampil_datanya();
+
+        $param['bulan']  = $this->input->get('bulan');
+        $param['tahun']  = $this->input->get('tahun');
+        $data['bulan']   = $this->input->get('bulan');
+        $data['tahun'] = $this->input->get('tahun');
+        $data['id_posisi'] = $this->input->get('id_posisi');
+
+
+        $param['id_posisi'] = $this->input->get('id_posisi');
+
+
+        $data['data'] = $this->Menu_model->semua_data($param);
+        $data['bobot_total'] = $this->Menu_model->total_bobot($param);
+        $data['pemain'] = $this->Pemain_model->data_laki($param);
+        $data['point'] = $this->Datamasukan_model;
+
+        $this->template->load('alayout/template', 'admin/laporan/detail_laki', $data);
     }
 
     function index_laki()
@@ -94,6 +122,34 @@ class Laporan extends MY_Controller
 
 
         $this->template->load('alayout/template', 'admin/laporan/index_laki', $data);
+    }
+
+    function detail_cewek()
+    {
+        $site = $this->Konfigurasi_model->listing();
+        $data = array(
+            'title'                 => ' Laporan | ' . $site['nama_website'],
+            'favicon'               => $site['favicon'],
+            'site'                  => $site,
+        );
+        $data['posisinya'] = $this->Posisi_model->tampil_datanya();
+
+        $param['bulan']  = $this->input->get('bulan');
+        $param['tahun']  = $this->input->get('tahun');
+        $data['bulan']   = $this->input->get('bulan');
+        $data['tahun'] = $this->input->get('tahun');
+        $data['id_posisi'] = $this->input->get('id_posisi');
+
+
+        $param['id_posisi'] = $this->input->get('id_posisi');
+
+
+        $data['data'] = $this->Menu_model->semua_data($param);
+        $data['bobot_total'] = $this->Menu_model->total_bobot($param);
+        $data['pemain'] = $this->Pemain_model->data_cewek($param);
+        $data['point'] = $this->Datamasukan_model;
+
+        $this->template->load('alayout/template', 'admin/laporan/detail_laki', $data);
     }
 
     function index_cewek()

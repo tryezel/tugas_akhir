@@ -8,12 +8,13 @@
 
   <div class="box">
     <div class="box-header">
-      <h2 class="page-header" style="display: initial;">Laporan</h2>
+      <h2 class="page-header" style="display: initial;">Laporan Pemain Perempuan</h2>
     </div>
     <hr>
 
     <!-- /.box-header -->
     <div class="box-body">
+      <hr>
       <form action="<?php echo site_url('admin/laporan/index_cewek') ?>" method="get">
         <div class="col-md-2">
           <div class="form-group">
@@ -82,50 +83,77 @@
         <tr>
           <td>Nama Pemain</td>
           <?php
-          foreach ($data as $v) { ?>
-            <td><?= $v->titik_lapangan ?></td>
+          // Proses grap
+          $semua_nama_pemain;
+          $chart_pemain = array();
+          foreach ($data as $key => $v) {
+            // menambahkan array grap
+            $chart_pemain[$key]['titik_lapangan'] = $v->titik_lapangan;
+            $chart_pemain[$key]['id_titik'] = $v->id_titik;
+          ?>
+            <td><?= $v->titik_lapangan; ?></td>
           <?php }
+          foreach ($pemain as $key => $value) {
+            $semua_nama_pemain[$key] = $value->nama_pemain;
+          }
           ?>
         </tr>
       </thead>
       <tbody>
         <?php
-        foreach ($pemain as $v) {
-          $params = array(
-            'id_pemain' => $v->id_pemain,
-            'bulan' => $bulan,
-            'tahun' => $tahun
-          );
-          $data_point = $point->detail_data($params);
+        if ($chart_pemain != '') {
+          // proses pengisian data
+          foreach ($chart_pemain as $key => $value) {
+            foreach ($pemain as $i => $v) {
+              $params = array(
+                'id_pemain' => $v->id_pemain,
+                'bulan' => $bulan,
+                'tahun' => $tahun,
+                'id_menu' => $chart_pemain[$key]['id_titik'],
+              );
+              $data_point = $point->detail_row($params);
+              $chart_pemain[$key][$v->nama_pemain] = $data_point;
+            }
+          }
+
+
+          foreach ($pemain as $key => $v) {
+            $params = array(
+              'id_pemain' => $v->id_pemain,
+              'bulan' => $bulan,
+              'tahun' => $tahun
+            );
+            $data_point = $point->detail_data($params);
         ?>
-          <tr>
-            <td><?= $v->nama_pemain ?></td>
-            <?php foreach ($data_point as $v) { ?>
-              <td><?php echo $v->point; ?></td>
-            <?php } ?>
-          </tr>
+            <tr>
+              <td><?= $v->nama_pemain;
+                  ?> </td>
+              <?php foreach ($data_point as $v) { ?>
+                <td><?php echo $v->point; ?></td>
+              <?php } ?>
+            </tr>
         <?php }
+        }
         ?>
     </table>
-
     <hr>
-    <h2>Tabel Utility</h2>
-    <table id=" table_id" class="display" cellspacing="0" width="100%">
-      <tr>
-        <td>Nama Pemain</td>
-        <?php
+    <!-- <h2>Tabel Utility</h2> -->
+    <!-- <table id=" table_id" class="display" cellspacing="0" width="100%"> -->
+    <tr>
+      <!-- <td>Nama Pemain</td> -->
+      <?php
         $utility_pemain = array();
         $semua_pemain = array();
         $semua_utility = array();
         $hasil_akhir = array();
         foreach ($data as $key => $v) {
           $utility_pemain[$key] = $v->titik_lapangan;
-        ?>
-          <td><?= $v->titik_lapangan ?></td>
-        <?php }
-        ?>
-      </tr>
-      <?php
+      ?>
+        <!-- <td><?= $v->titik_lapangan ?></td> -->
+      <?php }
+      ?>
+    </tr>
+    <?php
         $data = array();
         foreach ($pemain as $key => $v) {
           $semua_pemain[$key] = $v->id_pemain;
@@ -136,28 +164,28 @@
             'tahun' => $tahun
           );
           $data_point = $point->detail_data($params);
-      ?>
-        <tr>
+    ?>
+      <tr>
+        <td><?php
+            $nama = $v->nama_pemain;
+            $semua_utility[$id_pemain]['nama_pemain'] = $nama;
+            ?></td>
+        <?php foreach ($data_point as $key => $i) { ?>
           <td><?php
-              echo $nama = $v->nama_pemain;
-              $semua_utility[$id_pemain]['nama_pemain'] = $nama;
+              $params = array(
+                'id_menu' => $i->id_menu,
+                'point' => $i->point,
+                'bulan' => $bulan,
+                'tahun' => $tahun
+              );
+              $nilai = round(utility($params), 3);
+              $nilai;
+              $semua_utility[$id_pemain][$key] = $nilai;
               ?></td>
-          <?php foreach ($data_point as $key => $i) { ?>
-            <td><?php
-                $params = array(
-                  'id_menu' => $i->id_menu,
-                  'point' => $i->point,
-                  'bulan' => $bulan,
-                  'tahun' => $tahun
-                );
-                $nilai = round(utility($params), 3);
-                echo $nilai;
-                $semua_utility[$id_pemain][$key] = $nilai;
-                ?></td>
-          <?php } ?>
-        </tr>
-      <?php }
-      ?>
+        <?php } ?>
+      </tr>
+    <?php }
+    ?>
     </table>
     <!-- <pre>
       <?php print_r($utility_pemain) ?>
@@ -219,15 +247,41 @@
       <?php }
       ?>
     </table> -->
-    <h2>Hasil Akhir</h2>
+
+
+    <div class="card">
+      <div class="card-body">
+        <h2 class="card-title">Hasil Akhir</h2>
+        <p class="card-text"><?php arsort($hasil_akhir);
+                              foreach ($hasil_akhir as $key => $value) {
+                                echo "$key = $value <br>";
+                              };
+                              ?></p>
+        <form action="<?php echo site_url('admin/laporan/detail_cewek') ?>" method="get">
+          <input type="hidden" name="id_posisi" value="<?= $id_posisi ?>" id="">
+          <input type="hidden" name="bulan" value="<?= $bulan ?>" id="">
+          <input type="hidden" name="tahun" value="<?= $tahun ?>" id="">
+          <button type="submit" class="btn btn-primary">Detail Perhitungan</button>
+        </form>
+      </div>
+    </div>
+
+
     <hr>
-    <?php arsort($hasil_akhir);
-        foreach ($hasil_akhir as $key => $value) {
-          echo "$key = $value <br>";
-        };
-    ?>
-  <?php } ?>
+    <h2>Grafik Pemain</h2>
+    <div id="graph"></div>
+
+    <script src="<?php echo base_url() . 'assets/js/raphael-min.js' ?>"></script>
+    <script src="<?php echo base_url() . 'assets/js/morris.min.js' ?>"></script>
+    <script>
+      Morris.Bar({
+        element: 'graph',
+        data: <?php echo json_encode($chart_pemain); ?>,
+        xkey: 'titik_lapangan',
+        ykeys: <?php echo json_encode($semua_nama_pemain); ?>,
+        labels: <?php echo json_encode($semua_nama_pemain); ?>
+      });
+      <?php } ?>
+    </script>
   </div>
-
-
 </div>

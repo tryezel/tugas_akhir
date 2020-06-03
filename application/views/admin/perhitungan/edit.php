@@ -43,6 +43,7 @@
         <div>Nama : <?= $data->nama_pemain ?></div>
         <div>Posisi : <?= $data->posisi ?></div>
         <input type="hidden" name="id_pemain" value="<?= $data->id_pemain ?>">
+        <input type="hidden" name="gender" value="<?= $data->gender ?>">
         <input type="hidden" name="bulan" value="<? $bulan ?>">
         <input type="hidden" name="tahun" value="<? $tahun ?>">
         <input type="hidden" name="id_pemain" value="<?= $data->id_pemain ?>">

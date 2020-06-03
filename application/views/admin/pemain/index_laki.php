@@ -71,7 +71,7 @@
               <td><?= $v->berat_badan ?> kg</td>
               <td><?= $v->jurusan ?></td>
               <td>
-                <a href="<?= site_url('admin/pemain/hapus/' . $v->id_pemain) ?>" class="btn btn-danger">Hapus</a>
+                <a href="<?= site_url('admin/pemain/hapus_laki/' . $v->id_pemain) ?>" class="btn btn-danger">Hapus</a>
                 <a href="<?= site_url('admin/pemain/edit/' . $v->id_pemain) ?>" class="btn btn-warning">Edit</a>
               </td>
             </tr>
