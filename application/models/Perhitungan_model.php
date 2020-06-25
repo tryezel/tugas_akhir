@@ -98,8 +98,10 @@ class Perhitungan_model extends CI_Model
             posisi.*,
             titik_lapangan.*,
             pemain.*,
+            action.*,
             ');
         $this->db->join('posisi', 'menu_latihan.id_posisi = posisi.id_posisi');
+        $this->db->join('action', 'menu_latihan.id_action = action.id_action');
         $this->db->join('titik_lapangan', 'menu_latihan.id_titik = titik_lapangan.id_titik');
         $this->db->join('pemain', 'posisi.id_posisi = pemain.id_posisi');
         $this->db->from('menu_latihan');

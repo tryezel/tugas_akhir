@@ -88,10 +88,10 @@
           $chart_pemain = array();
           foreach ($data as $key => $v) {
             // menambahkan array grap
-            $chart_pemain[$key]['titik_lapangan'] = $v->titik_lapangan;
+            $chart_pemain[$key]['titik_lapangan'] = $v->titik_lapangan . '~' . $v->nama_action;
             $chart_pemain[$key]['id_titik'] = $v->id_titik;
           ?>
-            <td><?= $v->titik_lapangan; ?></td>
+            <td><?= $v->titik_lapangan . '~' . $v->nama_action; ?></td>
           <?php }
           foreach ($pemain as $key => $value) {
             $semua_nama_pemain[$key] = $value->nama_pemain;

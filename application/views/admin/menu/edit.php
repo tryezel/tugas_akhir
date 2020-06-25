@@ -51,6 +51,18 @@
                                     </select>
                                 </div>
 
+                                <div class="form-group">
+                                    <label>Action</label>
+                                    <select class="form-control" name="id_action">
+                                        <option value="">Pilih Action</option>
+
+                                        <!-- memsnggil database kategori buku dengan variabel $value -->
+                                        <?php foreach ($actionnya as $value) { ?>
+                                            <option <?= ($value->id_action == $menu->id_action) ? 'selected' : '' ?> value="<?php echo $value->id_action; ?>"><?php echo $value->nama_action ?></option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
+
 
 
                                 <div class="form-group">

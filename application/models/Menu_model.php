@@ -83,8 +83,10 @@ class Menu_model extends CI_Model
             menu_latihan.*,
             posisi.*,
             titik_lapangan.*,
+            action.*,
             ');
         $this->db->join('posisi', 'menu_latihan.id_posisi = posisi.id_posisi');
+        $this->db->join('action', 'menu_latihan.id_action = action.id_action');
         $this->db->join('titik_lapangan', 'menu_latihan.id_titik = titik_lapangan.id_titik');
         $this->db->from('menu_latihan');
         $this->db->order_by('titik_lapangan', 'asc');

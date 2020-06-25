@@ -14,6 +14,7 @@ class Menu extends MY_Controller
         $this->load->model('auth_model');
         $this->load->model('Menu_model');
         $this->load->model('Posisi_model');
+        $this->load->model('Action_model');
         $this->load->model('Titik_model');
         $this->load->helper('url');
     }
@@ -66,6 +67,7 @@ class Menu extends MY_Controller
             'site'                  => $site,
         );
         $data['posisinya'] = $this->Posisi_model->tampil_datanya();
+        $data['actionnya'] = $this->Action_model->tampil_datanya();
         $data['titiknya'] = $this->Titik_model->tampil_datanya();
         $this->load->library('form_validation');
         $this->form_validation->set_rules('bobot', 'Bobot', 'required');
@@ -74,6 +76,7 @@ class Menu extends MY_Controller
             date_default_timezone_set('ASIA/JAKARTA');
             $params = array(
                 'id_titik' => $this->input->post('id_titik'),
+                'id_action' => $this->input->post('id_action'),
                 'id_posisi' => $this->input->post('id_posisi'),
                 'bobot' => $this->input->post('bobot'),
                 'repetisi' => $this->input->post('repetisi'),
@@ -96,6 +99,7 @@ class Menu extends MY_Controller
             'site'                  => $site,
         );
         $data['posisinya'] = $this->Posisi_model->tampil_datanya();
+        $data['actionnya'] = $this->Action_model->tampil_datanya();
         $data['titiknya'] = $this->Titik_model->tampil_datanya();
         $data['menu'] = $this->Menu_model->detail_data($id_menu);
         $this->template->load('alayout/template', 'admin/menu/edit', $data);
@@ -105,6 +109,7 @@ class Menu extends MY_Controller
     {
         $data = array(
             'id_titik' => $this->input->post('id_titik'),
+            'id_action' => $this->input->post('id_action'),
             'id_posisi' => $this->input->post('id_posisi'),
             'bobot' => $this->input->post('bobot'),
             'repetisi' => $this->input->post('repetisi'),

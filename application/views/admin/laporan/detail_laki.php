@@ -29,6 +29,7 @@
           <th>No</th>
           <th>Posisi</th>
           <th>Titik Lapangan</th>
+          <th>Action</th>
           <th>Bobot</th>
           <th>Total</th>
           <th>Normalisi</th>
@@ -42,6 +43,7 @@
             <td><?= $key + 1 ?></td>
             <td><?= $v->posisi ?></td>
             <td><?= $v->titik_lapangan ?></td>
+            <td><?= $v->nama_action ?></td>
             <td><?= $v->bobot ?></td>
             <td>
               <?= $bobot_total ?>
@@ -64,7 +66,7 @@
           <td>Nama Pemain</td>
           <?php
           foreach ($data as $v) { ?>
-            <td><?= $v->titik_lapangan ?></td>
+            <td><?= $v->titik_lapangan . '~' . $v->nama_action ?></td>
           <?php }
           ?>
         </tr>
@@ -100,7 +102,7 @@
         foreach ($data as $key => $v) {
           $utility_pemain[$key] = $v->titik_lapangan;
         ?>
-          <td><?= $v->titik_lapangan ?></td>
+          <td><?= $v->titik_lapangan . '~' . $v->nama_action ?></td>
         <?php }
         ?>
       </tr>

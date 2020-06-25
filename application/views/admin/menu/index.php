@@ -54,6 +54,7 @@
           <tr>
             <th>No</th>
             <th>Titik Lapangan</th>
+            <th>Action</th>
             <th>Posisi</th>
             <th>Repetisi</th>
             <th>Bobot</th>
@@ -67,6 +68,7 @@
             <tr>
               <td><?= $key + 1 ?></td>
               <td><?= $v->titik_lapangan ?></td>
+              <td><?= $v->nama_action ?></td>
               <td><?= $v->posisi ?></td>
               <td><?= $v->repetisi ?></td>
               <td><?= $v->bobot ?></td>

@@ -49,6 +49,16 @@
                                         </div>
 
                                         <div>
+                                            <label for="id">Action</label>
+                                            <select class="form-control" name="id_action" required>
+                                                <option for="id" value="">Action</option>
+                                                <?php foreach ($actionnya as $value) { ?>
+                                                    <option value="<?php echo $value->id_action ?>"><?php echo $value->nama_action ?></option>
+                                                <?php } ?>
+                                            </select>
+                                        </div>
+
+                                        <div>
                                             <label for="id">Repetisi</label>
                                             <input type="text" placeholder="Repetisi" name="repetisi" value="<?php echo $this->input->post('repetisi'); ?>" class="form-control" required>
 

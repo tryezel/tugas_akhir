@@ -63,12 +63,14 @@
 
         ?>
             <div class="form-group" style="margin-left: 20px">
-                <label for=""><?= $v->titik_lapangan ?></label> <br>
+                <label for=""><?= $v->titik_lapangan . '~' . $v->nama_action ?> </label> <br>
                 <input type="hidden" name="id_menu[]" value="<?= $v->id_titik ?>">
-                <input type="text" placeholder="Poin" name="point[]" value="<?php if (!empty($isi)) echo $array['point']; ?>" <?php if (!empty($isi)) echo 'disabled'; ?> required>
+                <input type="hidden" id="rep-<?= $v->titik_lapangan ?>" value="<?= $v->repetisi ?>">
+                <input type="text" id="titik-<?= $v->titik_lapangan ?>" placeholder="Maksimal Point <?= $v->repetisi ?>" name="point[]" value="<?php if (!empty($isi)) echo $array['point']; ?>" <?php if (!empty($isi)) echo 'disabled'; ?> required>
+                <span id="message-<?= $v->titik_lapangan ?>"></span>
             </div>
         <?php } ?>
-        <button class="btn btn-info" <?php if (!empty($isi)) echo 'disabled'; ?>>simpan</button>
+        <button class="btn btn-info" id="submit" <?php if (!empty($isi)) echo 'disabled'; ?>>simpan</button>
         <a href="<?php if ($data->gender == 'l') {
                         echo base_url('admin/perhitungan/index_laki');
                     } elseif ($data->gender == 'p') {
@@ -87,6 +89,47 @@
 </div>
 
 
-<script src="//cdn.ckeditor.com/4.11.1/standard/ckeditor.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script>
+    var cek = [];
 </script>
+<?php
+foreach ($menu as $key => $v) { ?>
+    <script>
+        // var obj = '<?php echo json_encode($menu); ?>';
+
+        $("#titik-<?= $v->titik_lapangan ?>").on('keyup', function() {
+
+            if (parseInt($("#titik-<?= $v->titik_lapangan ?>").val()) <= parseInt($("#rep-<?= $v->titik_lapangan ?>").val())) {
+                $("#message-<?= $v->titik_lapangan ?>").html('').css('color', 'green');
+                Array.prototype.remove = function() {
+                    var what, a = arguments,
+                        L = a.length,
+                        ax;
+                    while (L && this.length) {
+                        what = a[--L];
+                        while ((ax = this.indexOf(what)) !== -1) {
+                            this.splice(ax, 1);
+                        }
+                    }
+                    return this;
+                };
+                if (cek.includes("<?= $v->titik_lapangan ?>") == true) {
+                    cek.remove("<?= $v->titik_lapangan ?>");
+                    console.log(cek);
+                }
+                if (cek == '')
+                    $('#submit').prop('disabled', false);
+
+            } else {
+                $("#message-<?= $v->titik_lapangan ?>").html('Poin melebihi maksimal repetisi <?= $v->repetisi ?>').css('color', 'red');
+                $('#submit').prop('disabled', true);
+                if (cek.includes("<?= $v->titik_lapangan ?>") == false) {
+                    cek.push("<?= $v->titik_lapangan ?>");
+                    console.log(cek);
+                }
+            }
+
+        });
+    </script>
+<?php } ?>
