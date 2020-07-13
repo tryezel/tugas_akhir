@@ -93,6 +93,30 @@
           </li>
         </ul>
       </li>
+      <hr>
+
+      <li class="treeview <?php if ($this->uri->segment(2) == 'laporan') {
+                            echo "active";
+                          } ?>">
+        <a href="#"><i class="fa fa-file-text"></i> <span>Konfigurasi</span>
+          <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
+        </a>
+        <ul class="treeview-menu">
+          <li class="<?php if ($this->uri->segment(3) == 'action') {
+                        echo "active";
+                      } ?>">
+            <a href="<?php echo site_url('admin/config/jurusan') ?>"><i class="fa  fa-angle-right"></i> Jurusan</a>
+          </li>
+          <li class="<?php if ($this->uri->segment(3) == 'action') {
+                        echo "active";
+                      } ?>">
+            <a href="<?php echo site_url('admin/config/action') ?>"><i class="fa  fa-angle-right"></i> Action</a>
+          </li>
+      </li>
+    </ul>
+    </li>
 
     </ul>
     <!-- /.sidebar-menu -->

@@ -46,7 +46,7 @@
         <input type="hidden" name="gender" value="<?= $data->gender ?>">
         <input type="hidden" name="bulan" value="<? $bulan ?>">
         <input type="hidden" name="tahun" value="<? $tahun ?>">
-        <input type="hidden" name="id_pemain" value="<?= $data->id_pemain ?>">
+        <input type="hidden" name="id_posisi" value="<?= $data->id_posisi ?>">
         <hr>
         <?php
         foreach ($menu as $key => $v) {
@@ -72,9 +72,9 @@
         <?php } ?>
         <button class="btn btn-info" id="submit" <?php if (!empty($isi)) echo 'disabled'; ?>>simpan</button>
         <a href="<?php if ($data->gender == 'l') {
-                        echo base_url('admin/perhitungan/index_laki');
+                        echo base_url('admin/perhitungan/index_laki') . '?id_posisi=' . $data->id_posisi;
                     } elseif ($data->gender == 'p') {
-                        echo base_url('admin/perhitungan/index_cewek');
+                        echo base_url('admin/perhitungan/index_cewek') . '?id_posisi=' . $data->id_posisi;
                     }
                     ?> " class="btn btn-danger">Kembali</a>
         <?php echo form_close(); ?>

@@ -166,6 +166,7 @@ class Perhitungan extends MY_Controller
 
     function simpan()
     {
+        $id_posisi = $this->input->post('id_posisi');
         $id_pemain = $this->input->post('id_pemain');
         $gender = $this->input->post('gender');
         $id_menu = $this->input->post('id_menu[]');
@@ -173,14 +174,6 @@ class Perhitungan extends MY_Controller
 
         foreach ($id_menu as $key => $v) {
 
-            // $param = array(
-            //     'id_pemain' => $id_pemain,
-            //     'id_menu' => $id_menu[$key],
-            //     'bulan' => $this->input->post('bulan'),
-            //     'tahun' => $this->input->post('tahun'),
-            //     'point' => $point[$key]
-            // );
-            // PR Update point
             $data = array(
                 'point' => $point[$key],
                 'id_pemain' => $id_pemain,
@@ -192,10 +185,10 @@ class Perhitungan extends MY_Controller
                 $this->Perhitungan_model->input_data($data);
         }
         if ($gender == 'l') {
-            redirect('admin/perhitungan/index_laki');
+            redirect('admin/perhitungan/index_laki?id_posisi=' . $id_posisi);
         }
         if ($gender == 'p') {
-            redirect('admin/perhitungan/index_cewek');
+            redirect('admin/perhitungan/index_cewek?id_posisi=' . $id_posisi);
         }
     }
 

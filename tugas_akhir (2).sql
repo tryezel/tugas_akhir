@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 03 Jun 2020 pada 10.39
+-- Waktu pembuatan: 25 Jun 2020 pada 15.03
 -- Versi server: 10.4.11-MariaDB
 -- Versi PHP: 7.2.29
 
@@ -20,6 +20,33 @@ SET time_zone = "+00:00";
 --
 -- Database: `tugas_akhir`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `action`
+--
+
+CREATE TABLE `action` (
+  `id_action` int(20) NOT NULL,
+  `nama_action` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `action`
+--
+
+INSERT INTO `action` (`id_action`, `nama_action`) VALUES
+(1, 'Shooting'),
+(2, 'One-Hand Set Shoot'),
+(3, 'Jump Shoot'),
+(4, 'Free Throw'),
+(5, 'Bank Shoot'),
+(6, 'Three Point Shoot'),
+(7, 'Lay-Up'),
+(8, 'Under Ring'),
+(9, 'Floater'),
+(10, 'Hook Shoot');
 
 -- --------------------------------------------------------
 
@@ -136,7 +163,22 @@ INSERT INTO `data_masukan` (`id_data`, `id_pemain`, `id_menu`, `point`, `tanggal
 (95, 13, 16, 15, '2020-06-03'),
 (96, 23, 17, 10, '2020-06-03'),
 (97, 23, 16, 8, '2020-06-03'),
-(98, 23, 44, 14, '2020-06-03');
+(98, 23, 44, 14, '2020-06-03'),
+(115, 4, 6, 18, '2020-06-25'),
+(116, 4, 11, 17, '2020-06-25'),
+(117, 4, 48, 13, '2020-06-25'),
+(118, 12, 6, 17, '2020-06-25'),
+(119, 12, 11, 18, '2020-06-25'),
+(120, 12, 48, 12, '2020-06-25'),
+(121, 3, 19, 16, '2020-06-25'),
+(122, 3, 15, 10, '2020-06-25'),
+(123, 3, 18, 9, '2020-06-25'),
+(124, 24, 19, 17, '2020-06-25'),
+(125, 24, 15, 9, '2020-06-25'),
+(126, 24, 18, 11, '2020-06-25'),
+(127, 25, 19, 13, '2020-06-25'),
+(128, 25, 15, 13, '2020-06-25'),
+(129, 25, 18, 12, '2020-06-25');
 
 -- --------------------------------------------------------
 
@@ -195,7 +237,7 @@ CREATE TABLE `konfigurasi` (
 --
 
 INSERT INTO `konfigurasi` (`id_konfigurasi`, `nama_website`, `alamat`, `jam_buka`, `email`, `facebook`, `favicon`, `instagram`, `logo`, `bg`, `no_telp`, `teks`, `icon`, `sambutan`, `foto_sambutan`, `caption_1`, `caption_2`, `link_pendaftaran`) VALUES
-(1, 'CAP Basketball Training', 'Jl. Laksda Adi Sucipto, Taman Baru, Kec. Banyuwangi ', 'Senin - Sabtu 08.00 - 19.00 WIB', 'fe@untag-banyuwangi.ac.id', 'Untag Banyuwangi', 'cap.png', '@untag_banyuwangi', 'cap.png', 'gajah_uling.png', '(0333) 411248', '<p>Selamat datang di website Fakultas Ekonomi Universitas 17 Agustus Banyuwangi</p>\r\n', 'cap.png', 'Selamat Datang ya', 'Selamat_Datang_ya-5500.jpg', '<p>Selamat Datang di Fakultas Ekonomi Untag Banyuwangi</p>\r\n', 'Prof. Edward', 'pbm.untag-banyuwangi.ac.id');
+(1, 'CAP Basketball Training', '', '', '', '', 'cap.png', '', 'cap.png', '', '', '', 'cap.png', '', '', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -207,6 +249,7 @@ CREATE TABLE `menu_latihan` (
   `id_menu` int(20) NOT NULL,
   `id_titik` varchar(20) NOT NULL,
   `id_posisi` varchar(20) NOT NULL,
+  `id_action` int(20) DEFAULT NULL,
   `bobot` int(10) NOT NULL,
   `repetisi` int(10) NOT NULL,
   `tanggal` date NOT NULL
@@ -216,24 +259,27 @@ CREATE TABLE `menu_latihan` (
 -- Dumping data untuk tabel `menu_latihan`
 --
 
-INSERT INTO `menu_latihan` (`id_menu`, `id_titik`, `id_posisi`, `bobot`, `repetisi`, `tanggal`) VALUES
-(9, '40', '2', 20, 30, '2020-04-25'),
-(10, '21', '2', 20, 30, '2020-04-25'),
-(11, '24', '4', 30, 40, '2020-04-25'),
-(12, '51', '1', 20, 30, '2020-04-25'),
-(13, '23', '2', 40, 50, '2020-04-28'),
-(14, '1', '2', 15, 20, '2020-05-02'),
-(15, '2', '2', 25, 30, '2020-05-02'),
-(16, '3', '2', 10, 15, '2020-05-02'),
-(17, '4', '2', 10, 15, '2020-05-02'),
-(18, '5', '2', 25, 30, '2020-05-02'),
-(19, '6', '2', 15, 20, '2020-05-02'),
-(20, '44', '2', 15, 20, '2020-06-02'),
-(21, '53', '2', 13, 20, '2020-06-02'),
-(22, '21', '2', 15, 20, '2020-06-02'),
-(23, '17', '1', 15, 20, '2020-06-03'),
-(24, '16', '1', 9, 10, '2020-06-03'),
-(25, '44', '1', 17, 20, '2020-06-03');
+INSERT INTO `menu_latihan` (`id_menu`, `id_titik`, `id_posisi`, `id_action`, `bobot`, `repetisi`, `tanggal`) VALUES
+(9, '40', '2', 1, 20, 30, '2020-04-25'),
+(10, '21', '2', 1, 20, 30, '2020-04-25'),
+(11, '24', '4', 1, 30, 40, '2020-04-25'),
+(12, '51', '1', 1, 20, 30, '2020-04-25'),
+(13, '23', '2', 1, 40, 50, '2020-04-28'),
+(14, '1', '2', 1, 15, 20, '2020-05-02'),
+(15, '2', '2', 1, 25, 30, '2020-05-02'),
+(16, '3', '2', 1, 10, 15, '2020-05-02'),
+(17, '4', '2', 1, 10, 15, '2020-05-02'),
+(18, '5', '2', 1, 25, 30, '2020-05-02'),
+(19, '6', '2', 1, 15, 20, '2020-05-02'),
+(20, '44', '2', 1, 15, 20, '2020-06-02'),
+(21, '53', '2', 1, 13, 20, '2020-06-02'),
+(22, '21', '2', 1, 15, 20, '2020-06-02'),
+(28, '6', '4', 1, 15, 20, '2020-06-25'),
+(29, '11', '4', 1, 10, 20, '2020-06-25'),
+(30, '48', '4', 1, 10, 15, '2020-06-25'),
+(32, '19', '1', 3, 15, 20, '2020-06-25'),
+(33, '15', '1', 5, 10, 15, '2020-06-25'),
+(34, '18', '1', 5, 10, 15, '2020-06-25');
 
 -- --------------------------------------------------------
 
@@ -268,7 +314,9 @@ INSERT INTO `pemain` (`id_pemain`, `id_posisi`, `id_jurusan`, `nama_pemain`, `ta
 (17, '2', 3, 'Bayu', '2000-05-21', 'l', '175', '62', 'D31182976'),
 (21, '2', 4, 'Ifa', '2001-06-10', 'p', '165', '55', 'D31187766'),
 (22, '2', 4, 'Sherly', '2001-06-27', 'p', '167', '50', 'D31187755'),
-(23, '1', 4, 'Laras', '1998-06-27', 'p', '160', '50', 'D31173322');
+(23, '1', 4, 'Laras', '1998-06-27', 'p', '160', '50', 'D31173322'),
+(24, '1', 2, 'rifqi', '2020-06-11', 'l', '180', '65', 'E4115267'),
+(25, '1', 4, 'Andre', '2020-06-11', 'l', '178', '65', 'E31189876');
 
 -- --------------------------------------------------------
 
@@ -392,11 +440,17 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id_user`, `id_role`, `nama`, `email`, `paswd`, `active`, `foto_ktp`, `photo`, `no_hp`, `profesi`, `tgl_daftar`, `lastlogin`, `alamat`, `facebook`, `instagram`, `asal`) VALUES
-(1, 1, 'CAP Basketball', 'capbasketball@gmail.com', '$2y$05$jT8zqnZ6b9ZjPxm252smwO2R2Np2ypNmRo2Itx.13MD8TliAhOWmy', '1', '', 'cap.png', '', 0, '2019-08-11 00:00:00', '2020-05-27 18:24:34', '', '', '', '');
+(1, 1, 'CAP Basketball', 'capbasketball@gmail.com', '$2y$05$jT8zqnZ6b9ZjPxm252smwO2R2Np2ypNmRo2Itx.13MD8TliAhOWmy', '1', '', 'cap.png', '', 0, '2019-08-11 00:00:00', '2020-06-23 07:38:27', '', '', '', '');
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indeks untuk tabel `action`
+--
+ALTER TABLE `action`
+  ADD PRIMARY KEY (`id_action`);
 
 --
 -- Indeks untuk tabel `data_masukan`
@@ -451,10 +505,16 @@ ALTER TABLE `user`
 --
 
 --
+-- AUTO_INCREMENT untuk tabel `action`
+--
+ALTER TABLE `action`
+  MODIFY `id_action` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
 -- AUTO_INCREMENT untuk tabel `data_masukan`
 --
 ALTER TABLE `data_masukan`
-  MODIFY `id_data` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=99;
+  MODIFY `id_data` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=130;
 
 --
 -- AUTO_INCREMENT untuk tabel `jurusan`
@@ -472,13 +532,13 @@ ALTER TABLE `konfigurasi`
 -- AUTO_INCREMENT untuk tabel `menu_latihan`
 --
 ALTER TABLE `menu_latihan`
-  MODIFY `id_menu` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id_menu` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT untuk tabel `pemain`
 --
 ALTER TABLE `pemain`
-  MODIFY `id_pemain` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id_pemain` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT untuk tabel `posisi`

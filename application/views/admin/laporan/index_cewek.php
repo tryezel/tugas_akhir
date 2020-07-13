@@ -9,6 +9,7 @@
   <div class="box">
     <div class="box-header">
       <h2 class="page-header" style="display: initial;">Laporan Pemain Perempuan</h2>
+      <a href="<?php echo site_url('admin/laporan/periode_cewek') ?>" class="btn btn-primary" style="float: right">Laporan Periode</a>
     </div>
     <hr>
 

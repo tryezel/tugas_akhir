@@ -24,6 +24,45 @@ class Jurusan_model extends CI_Model
         return $query->result();
     }
 
+    function semua_data()
+    {
+
+        $this->db->select('
+            jurusan.*,
+            ');
+        $this->db->from('jurusan');
+        $this->db->order_by('id_jurusan', 'asc');
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    function input_data($data)
+    {
+        $this->db->insert($this->table, $data);
+    }
+
+    function detail_data($id_jurusan)
+    {
+        $this->db->select('
+            jurusan.*,
+            ');
+        // $this->db->from('pemain');
+        $query =  $this->db->get_where($this->table, array('id_jurusan' => $id_jurusan));
+        return $query->row();
+    }
+
+    function update_data($data, $id_jurusan)
+    {
+        $this->db->where('id_jurusan', $id_jurusan);
+        $this->db->update($this->table, $data);
+    }
+
+    function hapus_data($id_data)
+    {
+        $this->db->where('id_jurusan', $id_data);
+        $this->db->delete($this->table);
+    }
+
     // public function get_all_categories()
     // {
     //     $query = $this->db->query('SELECT artikel.id_artikel, kategori_artikel.*, COUNT( * ) as total FROM artikel

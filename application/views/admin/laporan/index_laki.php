@@ -9,9 +9,8 @@
   <div class="box">
     <div class="box-header">
       <h2 class="page-header" style="display: initial;">Laporan Pemain Laki-Laki</h2>
+      <a href="<?php echo site_url('admin/laporan/periode_laki') ?>" class="btn btn-primary" style="float: right">Laporan Periode</a>
     </div>
-    <hr>
-
     <!-- /.box-header -->
     <div class="box-body">
       <hr>
@@ -47,6 +46,7 @@
             <button class="btn btn-primary">Cari</button>
           </div>
         </div>
+
       </form>
       <br>
       <?php if (empty($id_posisi)) { ?>

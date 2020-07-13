@@ -180,6 +180,80 @@ function bulan_indonesia($index = '')
     }
 }
 
+function bulan_indonesia_2($index = '')
+{
+    $list = array(
+        '01' => 'Januari',
+        '02' => 'Februari',
+        '03' => 'Maret',
+        '04' => 'April',
+        '05' => 'Mei',
+        '06' => 'Juni',
+        '07' => 'Juli',
+        '08' => 'Agustus',
+        '09' => 'September',
+        '10' => 'Oktober',
+        '11' => 'November',
+        '12' => 'Desember'
+    );
+    if (!empty($index)) {
+        return $list[$index];
+    } else {
+        return $list;
+    }
+}
+
+function nomor_bulan($bulan)
+{
+    if ($bulan == 1) {
+        return 'Januari';
+    }
+
+    if ($bulan == 2) {
+        return 'Februari';
+    }
+
+    if ($bulan == 3) {
+        return 'Maret';
+    }
+
+    if ($bulan == 4) {
+        return 'April';
+    }
+
+    if ($bulan == 5) {
+        return 'Mei';
+    }
+
+    if ($bulan == 6) {
+        return 'Juni';
+    }
+
+    if ($bulan == 7) {
+        return 'Juli';
+    }
+
+    if ($bulan == 8) {
+        return 'Agustus';
+    }
+
+    if ($bulan == 9) {
+        return 'September';
+    }
+
+    if ($bulan == 10) {
+        return 'Oktober';
+    }
+
+    if ($bulan == 11) {
+        return 'November';
+    }
+
+    if ($bulan == 12) {
+        return 'Desember';
+    }
+}
+
 function opt_tahun($start = 1990)
 {
     $result = array();

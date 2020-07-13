@@ -124,6 +124,46 @@ class Laporan extends MY_Controller
         $this->template->load('alayout/template', 'admin/laporan/index_laki', $data);
     }
 
+    function periode_laki()
+    {
+        $site = $this->Konfigurasi_model->listing();
+        $data = array(
+            'title'                 => ' Laporan | ' . $site['nama_website'],
+            'favicon'               => $site['favicon'],
+            'site'                  => $site,
+        );
+        $data['posisinya'] = $this->Posisi_model->tampil_datanya();
+
+        $param['bulan']  = $this->input->get('bulan');
+        $param['tahun']  = $this->input->get('tahun');
+        $data['bulan']   = $this->input->get('bulan');
+        $data['bulanAkhir']  = $this->input->get('bulanAkhir');
+        $data['tahun'] = $this->input->get('tahun');
+        $data['id_posisi'] = $this->input->get('id_posisi');
+
+        if (empty($param['bulan'])) {
+            $param['bulan'] = date('m');
+            $data['bulan'] = 01;
+        }
+        if (empty($param['bulanAkhir'])) {
+            $data['bulanAkhir'] = date('m');
+        }
+        if (empty($param['tahun'])) {
+            $param['tahun'] = date('Y');
+            $data['tahun'] = date('Y');
+        }
+        if (!empty($this->input->get('id_posisi'))) {
+            $param['id_posisi'] = $this->input->get('id_posisi');
+        }
+
+        $data['dataMenu'] = $this->Menu_model;
+        $data['bobot_total_model'] = $this->Menu_model;
+        $data['pemain'] = $this->Pemain_model->data_laki($param);
+        $data['point'] = $this->Datamasukan_model;
+
+        $this->template->load('alayout/template', 'admin/laporan/periode_laki', $data);
+    }
+
     function detail_cewek()
     {
         $site = $this->Konfigurasi_model->listing();
@@ -188,82 +228,40 @@ class Laporan extends MY_Controller
         $this->template->load('alayout/template', 'admin/laporan/index_cewek', $data);
     }
 
-    /*
-     * Adding a new artikel
-    //  */
-    // function tambah()
-    // {
-    //     $site = $this->Konfigurasi_model->listing();
-    //     $data = array(
-    //         'title'                 => 'Menu Latihan | ' . $site['nama_website'],
-    //         'favicon'               => $site['favicon'],
-    //         'site'                  => $site,
-    //     );
-    //     $data['posisinya'] = $this->Posisi_model->tampil_datanya();
-    //     $data['titiknya'] = $this->Titik_model->tampil_datanya();
-    //     $this->load->library('form_validation');
-    //     $this->form_validation->set_rules('bobot', 'Bobot', 'required');
-    //     $this->form_validation->set_rules('repetisi', 'Repetisi', 'required');
-    //     if ($this->form_validation->run()) {
-    //         date_default_timezone_set('ASIA/JAKARTA');
-    //         $params = array(
-    //             'id_titik' => $this->input->post('id_titik'),
-    //             'id_posisi' => $this->input->post('id_posisi'),
-    //             'bobot' => $this->input->post('bobot'),
-    //             'repetisi' => $this->input->post('repetisi'),
-    //             'tanggal' => date('Y-m-d'),
-    //         );
+    function periode_cewek()
+    {
+        $site = $this->Konfigurasi_model->listing();
+        $data = array(
+            'title'                 => ' Laporan | ' . $site['nama_website'],
+            'favicon'               => $site['favicon'],
+            'site'                  => $site,
+        );
+        $data['posisinya'] = $this->Posisi_model->tampil_datanya();
 
-    //         $this->Menu_model->input_data($params);
-    //         redirect('admin/menu');
-    //     } else {
-    //         $this->template->load('alayout/template', 'admin/menu/add', $data);
-    //     }
-    // }
+        $param['bulan']  = $this->input->get('bulan');
+        $param['tahun']  = $this->input->get('tahun');
+        $data['bulan']   = $this->input->get('bulan');
+        $data['bulanAkhir']  = $this->input->get('bulanAkhir');
+        $data['tahun'] = $this->input->get('tahun');
+        $data['id_posisi'] = $this->input->get('id_posisi');
 
-    // function edit($id_menu)
-    // {
-    //     $site = $this->Konfigurasi_model->listing();
-    //     $data = array(
-    //         'title'                 => 'Edit Menu Latihan | ' . $site['nama_website'],
-    //         'favicon'               => $site['favicon'],
-    //         'site'                  => $site,
-    //     );
-    //     $data['posisinya'] = $this->Posisi_model->tampil_datanya();
-    //     $data['titiknya'] = $this->Titik_model->tampil_datanya();
-    //     $data['menu'] = $this->Menu_model->detail_data($id_menu);
-    //     $this->template->load('alayout/template', 'admin/menu/edit', $data);
-    // }
+        if (empty($param['bulan'])) {
+            $param['bulan'] = date('m');
+            $data['bulan'] = date('m', strtotime('-3 months'));
+        }
+        if (empty($param['tahun'])) {
+            $param['tahun'] = date('Y');
+            $data['tahun'] = date('Y');
+        }
+        if (!empty($this->input->get('id_posisi'))) {
+            $param['id_posisi'] = $this->input->get('id_posisi');
+        }
 
-    // function update($id_menu)
-    // {
-    //     $data = array(
-    //         'id_titik' => $this->input->post('id_titik'),
-    //         'id_posisi' => $this->input->post('id_posisi'),
-    //         'bobot' => $this->input->post('bobot'),
-    //         'repetisi' => $this->input->post('repetisi'),
-    //         'tanggal' => date('Y-m-d'),
-    //     );
+        $data['dataMenu'] = $this->Menu_model;
+        $data['bobot_total_model'] = $this->Menu_model;
+        $data['pemain'] = $this->Pemain_model->data_cewek($param);
+        $data['point'] = $this->Datamasukan_model;
 
-    //     $this->Menu_model->update_data($data, $id_menu);
-    //     redirect('admin/menu/index/');
-    // }
-
-    // function hapus($id)
-    // {
-    //     $site = $this->Konfigurasi_model->listing();
-    //     $data = array(
-    //         'title'                 => 'Data Pemain | ' . $site['nama_website'],
-    //         'favicon'               => $site['favicon'],
-    //         'site'                  => $site,
-    //     );
-    //     $pemain = $this->Pemain_model->detail_data($id);
-
-    //     // check if the artikel exists before trying to delete it
-    //     if (isset($pemain->id_pemain)) {
-    //         $this->Pemain_model->hapus_data($pemain->id_pemain);
-    //         redirect('admin/pemain/index');
-    //     } else
-    //         show_error('Data Artikel tidak ada');
-    // }
+        $this->template->load('alayout/template', 'admin/laporan/periode_cewek', $data);
+    }
 }

@@ -27,6 +27,8 @@ class Home extends MY_Controller
         $this->load->model('pemain_model');
         $this->load->model('menu_model');
         $this->load->model('titik_model');
+        $this->load->model('posisi_model');
+        $this->load->model('datamasukan_model');
         // $this->load->model('download_area_model');
     }
 
@@ -41,7 +43,13 @@ class Home extends MY_Controller
         $data['pemain'] = $this->pemain_model->total_pemain();
         $data['menu'] = $this->menu_model->total_menu();
         $data['titik'] = $this->titik_model->total_titik();
-        // $data['download'] = $this->download_area_model->total_file();
+
+
+        $data['dataMenu'] = $this->menu_model;
+        $data['bobot_total_model'] = $this->menu_model;
+        $data['pemainModel'] = $this->pemain_model;
+        $data['point'] = $this->datamasukan_model;
+        $data['posisi'] = $this->posisi_model->tampil_datanya();
 
         $this->template->load('alayout/template', 'admin/dashboard', $data);
     }
